@@ -9,5 +9,5 @@ real-time chat app, you can say its a facebook clone but not completed yet.
 ## some features:
 - you can delete your message.
 - you can remove your account and all data that connected with will be deleted.
-! am still working to make it more useable and scalable.
+\n ! am still working to make it more useable and scalable.
 
