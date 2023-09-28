@@ -1,0 +1,45 @@
+<form>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="text-center">
+                <h2><i class="fa-solid fa-cat"></i></h2>
+                <h2>signup</h2>
+            </div>
+            <div class="col-sm-5">
+                <label for="username" class="form-label">user name</label>
+                <input type="text" class="form-control form-control-sm" name="username" id="username">
+                <div class="username error"></div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-sm-5">
+                <label for="email" class="form-label">email</label>
+                <input type="email" class="form-control form-control-sm" name="email" id="email">
+                <div class="email error"></div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-sm-5">
+                <label for="password" class="form-label">password</label>
+                <input type="password" class="form-control form-control-sm" name="password" id="password">
+                <div class="pass error"></div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-sm-5 align-items-center">
+                <label for="gender" class="form-label">gender</label>
+                <select class="form-select form-select-sm" aria-label="Default select example" name="gender" id="gender"
+                    required>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+                <div class="gender error"></div>
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary btn-sm">sign up</button>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</form>
+<script src="/javascripts/signup.js"></script>

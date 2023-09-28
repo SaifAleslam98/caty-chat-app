@@ -1,0 +1,38 @@
+<nav class="navbar navbar-dark bg-primary navbar-expand-lg sticky-top ">
+    <div class="container-fluid">
+        <a class="navbar-brand mb-0 h1" href="/"><i class="fa-solid fa-cat"></i>CatyChat</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+            <div class="d-flex">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            Account
+                        </a>
+                        <ul class="dropdown-menu">
+                            {{#if user}}
+
+                            <li><a class="dropdown-item" href="/auth/logout">logout</a></li>
+
+                            {{else}}
+                            <li><a class="dropdown-item" href="/auth/login"><i class="fa fa-sign-in"
+                                        aria-hidden="true"></i>
+                                    login</a></li>
+                            <li><a class="dropdown-item" href="/auth/signup"><i class="fa fa-user-plus"
+                                        aria-hidden="true"></i>
+                                    signup</a></li>
+                            {{/if}}
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " aria-current="page" href="/"><i class="fa fa-house"></i> Home</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>

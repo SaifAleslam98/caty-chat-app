@@ -1,0 +1,35 @@
+
+<ul class="list-group">
+    {{#each data}}
+    <li class="list-group-item d-flex justify-content-between align-items-start" data-id="{{this._d}}">
+        <img src="/images/{{this.image}}" class="profile-image">
+        <div class="ms-2 me-auto">
+            <div class="" style="font-size: 10px;">{{this.username}}</div>
+        </div>
+        <button class="btn btn-primary btn-sm btn-send" style="font-size: 10px;" id="{{this._id}}"
+            name="send">add</button>
+    </li>
+
+    {{/each}}
+</ul>
+<p id="demo"></p>
+<script>
+var btn = document.getElementsByName('send');
+$(document).on('click','.btn-send', function(e) {
+e.preventDefault();
+    var id = $(this).attr('id');
+    console.log(id);
+    $.ajax({
+        url:'/addFriend',
+        type:'POST',
+        data:{id: id},
+        success:function(res){
+            if(res.success){
+                $('#'+id).disable=true;
+            }
+        }
+    })
+
+})
+
+</script>

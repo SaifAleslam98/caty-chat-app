@@ -1,0 +1,51 @@
+<div class="header">
+    <ul class="list-group">
+        <li class="list-group-item list-group-item-light cursor-pointer user-list" id="{{receiver_user._id}}">
+            <img src="/images/{{receiver_user.image}}" class="profile-image">
+            <span id="receiverName">{{receiver_user.username}}</span>
+            {{#if receiver_user.is_online}}
+            <span class="online" id="{{receiver_user._id}}-status">online</span>
+            {{else}}
+            <span class="offline" id="{{receiver_user._id}}-status">offline</span>
+            {{/if}}
+        </li>
+    </ul>
+</div>
+<div>
+    <div class="chat-section">
+        <div class="chat-container" id="chat-container">
+
+        </div>
+        <form action="" id="chat-form">
+            <input type="text" name="message" id="message" placeholder="type a message.."
+                class="form-control form-control-sm" style="width:70%;" required>
+
+            <button class="btn btn-primary btn-sm" style="width: 15%;">Send</button>
+        </form>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="deleteChatModel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Delete chat</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="delete-chat-form">
+                <div class="modal-body">
+                    <input type="hidden" id="delete-message-id" name="id">
+                    <p>are you sure to delete this message?</p>
+                    <p><b id="delete-message"></b></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger btn-sm">delete</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="/javascripts/chat-io.js"></script>

@@ -1,0 +1,118 @@
+<div class="container text-center">
+  <div class="row mt-2 justify-content-center">
+
+    <form class="search-form" id="search-form" action="/search" method="post">
+      <input type="text" class="search-input" placeholder="search" name="keyword" id="keyword" required>
+      <button class="butn"><i class="fa fa-search"></i></button>
+    </form>
+
+  </div>
+</div>
+<ul class="nav nav-tabs mt-1" id="myTab" role="tablist">
+  <li class="nav-item" role="presentation">
+    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#watch-tab-pane" type="button"
+      role="tab" aria-controls="home-tab-pane" aria-selected="true"><i class="fa fa-house"></i></button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="friend-tab" data-bs-toggle="tab" data-bs-target="#friend-tab-pane" type="button"
+      role="tab" aria-controls="friend-tab-pane" aria-selected="false"><i class="fa-solid fa-users"></i></button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="watch-tab" data-bs-toggle="tab" data-bs-target="#watch-tab-pane" type="button"
+      role="tab" aria-controls="watch-tab-pane" aria-selected="false"><i class="fa-solid fa-tv"></i></button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#watch-tab-pane" type="button"
+      role="tab" aria-controls="profile-tab-pane" aria-selected="false"><i class="fa-solid fa-user"></i></button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="watch-tab" data-bs-toggle="tab" data-bs-target="#watch-tab-pane" type="button"
+      role="tab" aria-controls="watch-tab-pane" aria-selected="false"><i class="fa-solid fa-bell"></i></button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link " id="chat-tab" data-bs-toggle="tab" data-bs-target="#chat-tab-pane" type="button"
+      role="tab" aria-controls="chat-tab-pane" aria-selected="false"><i class="fa-solid fa-comments"></i></button>
+  </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+    <div class="container text-center mt-3">
+      On progress now
+    </div>
+  </div>
+  <div class="tab-pane fade " id="friend-tab-pane" role="tabpanel" aria-labelledby="friend-tab" tabindex="0">
+    <div class="col-md-3 mt-1 container">
+      <h5>Friend Requests</h5>
+      <div id="no-friend-msg"></div>
+      <ul class="list-group" id="friendRequestUl">
+
+        
+
+      </ul>
+    </div>
+  </div>
+  <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">...</div>
+  <div class="tab-pane fade " id="watch-tab-pane" role="tabpanel" aria-labelledby="watch-tab" tabindex="0">
+    <div class="container text-center mt-3">
+      On progress now
+    </div>
+  </div>
+  <div class="tab-pane fade" id="chat-tab-pane" role="tabpanel" aria-labelledby="chat-tab" tabindex="0">
+    <div class="col-md-4 mt-2">
+      <ul class="list-group">
+        {{#each allusers}}
+        <a href="/open-chat/{{this._id}}" style="text-decoration:none;">
+          <li class="list-group-item cursor-pointer user-list" id="{{this._id}}">
+            <img src="/images/{{this.image}}" class="profile-image">
+            <span id="receiverName">{{this.username}}</span>
+            {{#if this.is_online}}
+            <span class="online" id="{{this._id}}-status">online</span>
+            {{else}}
+            <span class="offline" id="{{this._id}}-status">offline</span>
+            {{/if}}
+          </li>
+        </a>
+        {{/each}}
+      </ul>
+    </div>
+  </div>
+</div>
+<script>
+  $('#friend-tab').on('click', function (e) {
+    e.preventDefault();
+    $('#friendRequestUl').html('');
+    $.ajax({
+      url: '/getFriendRequest',
+      type: 'GET',
+      success: (res) => {
+        if (res.success) {
+          if (res.data.length <= 0) {
+            document.getElementById("no-friend-msg").innerHTML = 'no requests';
+          }
+          else {
+            var length = res.data.length;
+            let html = '';
+            let friend_requests = res.data;
+            for (let counter = 0; counter < length; counter++) {
+              
+              html += `
+              <li class="list-group-item d-flex justify-content-between align-items-start">
+                  <img src='/images/`+friend_requests[counter].sender_id.image+`' class="profile-image">
+                  <div class="ms-2 me-auto">
+                  <div class="fw-bold" style="font-size: 10px;">`+friend_requests[counter].sender_id.username+`</div>
+                  
+                  </div>
+                  <a class="blue-btn" id="{{this._id}}" name="send">accept</a>
+                  <a class="gray-btn" id="{{this._id}}" name="send">delete</a>
+                  </li>
+              `
+            }
+            $('#friendRequestUl').append(html);
+            
+          }
+        }
+      }
+    })
+  })
+
+</script>
