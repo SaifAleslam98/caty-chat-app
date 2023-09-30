@@ -2,6 +2,7 @@ const User = require('../models/userModel');
 const Chat = require('../models/chatModel');
 const Group = require('../models/groupModel');
 const FriendRequest = require('../models/friendRequest');
+const Friends = require('../models/friendsModel');
 
 // chat Controller
 module.exports.saveChat = async (req, res) => {
@@ -62,9 +63,9 @@ module.exports.createGroup = async (req, res) => {
         res.status(400).send({ success: false, msg: error })
     }
 }
-module.exports.getAllUsers = async (req, res) => {
+module.exports.getMyFriendsList = async (req, res) => {
     try {
-        const usersList = await User.find({ _id: { $nin: res.locals.user._id } }).select('-password').lean();
+        const usersList = await Friends.find({ user: res.locals.user._id  }).select('-password').populate('friend').lean();
         res.render('users/home', { title: 'Home', allusers: usersList });
     } catch (error) {
         res.status(400).send({ msg: error.message })
@@ -111,5 +112,24 @@ module.exports.getFriendRequestList = async(req,res)=>{
     } catch (error) {
         console.log(error)
         res.status(400).send({success:false, msg: error})
+    }
+}
+module.exports.acceptFriend = async(req,res)=>{
+    try {
+        var {id, sender} = req.body
+        await Friends.create({user: res.locals.user._id, friend: sender});
+        await Friends.create({user: sender, friend: res.locals.user._id});
+        await FriendRequest.findByIdAndDelete(id);
+        res.status(200).send({success:true, msg:'done'})
+    } catch (error) {
+        console.log(error)
+        res.status(400).send({success:false, msg:error})
+    }
+}
+module.exports.myProfile = async(req,res)=>{
+    try {
+        res.render('users/profile')
+    } catch (error) {
+        res.status(400).send({success:false, msg:error})
     }
 }

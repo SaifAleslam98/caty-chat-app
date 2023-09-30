@@ -6,6 +6,10 @@ const friendSchema = mongoose.Schema({
         ref:'User',
         required:[true, 'try to relogin']
     },
-    freinds: Array,
+    friend: {
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'User',
+        required:[true, 'try to relogin']
+    },
 },{timestamps:true});
 module.exports = mongoose.model('Friends', friendSchema);

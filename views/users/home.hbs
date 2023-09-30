@@ -1,16 +1,6 @@
-<div class="container text-center">
-  <div class="row mt-2 justify-content-center">
-
-    <form class="search-form" id="search-form" action="/search" method="post">
-      <input type="text" class="search-input" placeholder="search" name="keyword" id="keyword" required>
-      <button class="butn"><i class="fa fa-search"></i></button>
-    </form>
-
-  </div>
-</div>
 <ul class="nav nav-tabs mt-1" id="myTab" role="tablist">
   <li class="nav-item" role="presentation">
-    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#watch-tab-pane" type="button"
+    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button"
       role="tab" aria-controls="home-tab-pane" aria-selected="true"><i class="fa fa-house"></i></button>
   </li>
   <li class="nav-item" role="presentation">
@@ -35,9 +25,51 @@
   </li>
 </ul>
 <div class="tab-content" id="myTabContent">
-  <div class="tab-pane fade" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
-    <div class="container text-center mt-3">
-      On progress now
+  <div class="tab-pane active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+    <div class="container mt-2">
+      <div class="row mt-1 justify-content-center ">
+        <div class="col-md-4 ">
+          <img src="/images/{{user.image}}" class="profile-image">
+          <input type="text" class="search-input" placeholder="what's on your mind?" name="keyword" id="keyword"
+            data-bs-toggle="modal" data-bs-target="#new-text-post" required>
+          <button class="butn" data-bs-toggle="modal" data-bs-target="#search-modal"><i
+              class="fa fa-search"></i></button>
+        </div>
+      </div>
+      <div class="row mt-1 justify-content-center ">
+        <div class="col-md-4 ">
+          <div class="card">
+            <div class="card-header">
+              <img src="/images/{{user.image}}" class="profile-image">
+              {{user.username}}
+            </div>
+            <div class="card-body">
+              <div class="post-text">This is a wider card with supporting text below as a natural lead-in to additional
+                content. This content is a little bit longer.</div>
+
+            </div>
+            <img src="/images/profile/male-icon-7928.png" class="card-img-bottom post-image" alt="...">
+            <div class="card-footer ">Footer</div>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-1 mb-1 justify-content-center ">
+        <div class="col-md-4 ">
+          <div class="card">
+            <div class="card-header">
+              <img src="/images/{{user.image}}" class="profile-image">
+              {{user.username}}
+            </div>
+            <div class="card-body">
+              <div class="post-text">This is a wider card with supporting text below as a natural lead-in to additional
+                content. This content is a little bit longer.</div>
+
+            </div>
+            
+            <div class="card-footer card-footer-sm">Footer</div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
   <div class="tab-pane fade " id="friend-tab-pane" role="tabpanel" aria-labelledby="friend-tab" tabindex="0">
@@ -45,9 +77,6 @@
       <h5>Friend Requests</h5>
       <div id="no-friend-msg"></div>
       <ul class="list-group" id="friendRequestUl">
-
-        
-
       </ul>
     </div>
   </div>
@@ -61,14 +90,14 @@
     <div class="col-md-4 mt-2">
       <ul class="list-group">
         {{#each allusers}}
-        <a href="/open-chat/{{this._id}}" style="text-decoration:none;">
-          <li class="list-group-item cursor-pointer user-list" id="{{this._id}}">
-            <img src="/images/{{this.image}}" class="profile-image">
-            <span id="receiverName">{{this.username}}</span>
+        <a href="/open-chat/{{this.friend._id}}" style="text-decoration:none;">
+          <li class="list-group-item cursor-pointer user-list" id="{{this.friend._id}}">
+            <img src="/images/{{this.friend.image}}" class="profile-image">
+            <span id="receiverName">{{this.friend.username}}</span>
             {{#if this.is_online}}
-            <span class="online" id="{{this._id}}-status">online</span>
+            <span class="online" id="{{this.friend._id}}-status">online</span>
             {{else}}
-            <span class="offline" id="{{this._id}}-status">offline</span>
+            <span class="offline" id="{{this.friend._id}}-status">offline</span>
             {{/if}}
           </li>
         </a>
@@ -77,6 +106,63 @@
     </div>
   </div>
 </div>
+<!-- Modals -->
+<!-- create new text post modal -->
+<div class="modal fade " id="new-text-post" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-fullscreen">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">create post</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form action="" method="post" enctype="multipart/form-data">
+        <div class="modal-body">
+          <div class="row mb-3 justify-content-center">
+            <div class="col-sm-10">
+              <textarea class="form-control" aria-label="With textarea" placeholder="what's on your mind?"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal"
+            aria-label="Close">close</button>
+          <button type="submit" class="btn btn-success btn-sm" id="saveImageButton">post</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- search modal -->
+<div class="modal fade " id="search-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-fullscreen">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">search</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="row mb-3 justify-content-center text-center">
+          <div class="col-sm-10">
+            <form class="search-form" id="search-form" action="/search" method="post">
+              <input type="text" class="search-input" placeholder="search for friend" name="keyword" id="keyword"
+                required>
+              <button class="butn btn-success"><i class="fa fa-search"></i></button>
+
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal" aria-label="Close">close</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
   $('#friend-tab').on('click', function (e) {
     e.preventDefault();
@@ -84,7 +170,7 @@
     $.ajax({
       url: '/getFriendRequest',
       type: 'GET',
-      success: (res) => {
+      success: function (res) {
         if (res.success) {
           if (res.data.length <= 0) {
             document.getElementById("no-friend-msg").innerHTML = 'no requests';
@@ -94,25 +180,40 @@
             let html = '';
             let friend_requests = res.data;
             for (let counter = 0; counter < length; counter++) {
-              
+
               html += `
-              <li class="list-group-item d-flex justify-content-between align-items-start">
-                  <img src='/images/`+friend_requests[counter].sender_id.image+`' class="profile-image">
+              <li class="list-group-item d-flex justify-content-between align-items-start" id='`+ friend_requests[counter]._id + `-li'>
+                  <img src='/images/`+ friend_requests[counter].sender_id.image + `' class="profile-image">
                   <div class="ms-2 me-auto">
-                  <div class="fw-bold" style="font-size: 10px;">`+friend_requests[counter].sender_id.username+`</div>
-                  
+                  <div class="fw-bold" style="font-size: 10px;">`+ friend_requests[counter].sender_id.username + `</div>
+                  <input type="hidden" value='`+ friend_requests[counter].sender_id._id + `' id='sender'>
                   </div>
-                  <a class="blue-btn" id="{{this._id}}" name="send">accept</a>
-                  <a class="gray-btn" id="{{this._id}}" name="send">delete</a>
+                  <a class="blue-btn" id='`+ friend_requests[counter]._id + `' name="send">accept</a>
+                  <a class="gray-btn" id='`+ friend_requests[counter]._id + `' name="delete">delete</a>
                   </li>
               `
             }
             $('#friendRequestUl').append(html);
-            
+            return;
           }
         }
-      }
+      },
     })
-  })
-
+  });
+  $(document).on('click', '.blue-btn', async function (event) {
+    event.preventDefault();
+    var id = $(this).attr('id');
+    var sender = $('#sender').val();
+    console.log(id)
+    console.log(sender)
+    const res = await fetch('/acceptFriend', {
+      method: 'POST',
+      body: JSON.stringify({ id, sender }),
+      headers: { 'Content-Type': 'application/json' }
+    });
+    const data = await res.json();
+    if (data.success) {
+      $('#' + id + '-li').remove();
+    }
+  });
 </script>
