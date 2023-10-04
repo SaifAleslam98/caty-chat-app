@@ -133,3 +133,11 @@ module.exports.myProfile = async(req,res)=>{
         res.status(400).send({success:false, msg:error})
     }
 }
+module.exports.deleteMyAccount = async(req,res)=>{
+    try {
+        await User.findByIdAndDelete(res.locals.user._id);
+        res.redirect('/auth/logout');
+    } catch (error) {
+        res.status(400).send({success: false, msg: error.message})
+    }
+}
